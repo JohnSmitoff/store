@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Animal
 from django.core.serializers import serialize
+from .forms import AnimalForm
 
 # Create your views here.
 
@@ -72,3 +73,19 @@ def delete(request, animal_id):
     a_id = animal_id
     animal.delete()
     return HttpResponse(f"animal with id {a_id} deleted form DB")
+
+
+def create_animal_form(request):
+    if request.method == "GET":
+        form = AnimalForm()
+        context = {"form": form}
+        return render(request, "create.html", context)
+    elif request.method == 'POST':
+        form = AnimalForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('Created')
+        else:
+            return HttpResponse('not Created')
+
+
