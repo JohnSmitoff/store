@@ -10,7 +10,7 @@ class Owner(models.Model):
     owner_sex = models.CharField(max_length=1,choices=OWNER_SEX)
 
     def __str__(self):
-        return f"owner_id -> {self.pk} : name - {self.first_name} {self.last_name} "
+        return f"owner_id -> {self.pk} : name - {self.first_name} {self.last_name} : {self.owner_sex} "
 
 
 class Animal(models.Model):
