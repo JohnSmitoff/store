@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .models import Animal
 from django.core.serializers import serialize
 from .forms import AnimalForm
-
+from django.views.generic import ListView , UpdateView
 # Create your views here.
 
 
@@ -87,5 +87,18 @@ def create_animal_form(request):
             return HttpResponse('Created')
         else:
             return HttpResponse('not Created')
+
+
+class AnimalList(ListView):
+    model = Animal
+    template_name = 'animal_list.html'
+    context_object_name = 'animals'
+
+
+class AnimalUpdate(UpdateView):
+    model = Animal
+    form_class = AnimalForm
+    template_name = 'create.html'
+    success_url = '/animals/all/'
 
 
