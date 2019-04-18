@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Animal
+from .models import Owner
 from django.core.serializers import serialize
 from .forms import AnimalForm
-from django.views.generic import ListView , UpdateView
+from .forms import OwnerForm
+from django.views.generic import ListView, UpdateView, CreateView, DeleteView, DetailView
+
 # Create your views here.
 
 
@@ -80,25 +83,62 @@ def create_animal_form(request):
         form = AnimalForm()
         context = {"form": form}
         return render(request, "create.html", context)
-    elif request.method == 'POST':
+    elif request.method == "POST":
         form = AnimalForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse('Created')
+            return HttpResponse("Created")
         else:
-            return HttpResponse('not Created')
+            return HttpResponse(form.errors)
 
 
 class AnimalList(ListView):
     model = Animal
-    template_name = 'animal_list.html'
-    context_object_name = 'animals'
+    template_name = "animal_list.html"
+    context_object_name = "animals"
 
 
 class AnimalUpdate(UpdateView):
     model = Animal
     form_class = AnimalForm
-    template_name = 'create.html'
-    success_url = '/animals/all/'
+    template_name = "edit.html"
+    success_url = "/animals/all/"
 
 
+class AnimalCreate(CreateView):
+    model = Animal
+    form_class = AnimalForm
+    template_name = "create.html"
+    # context_object_name = "animals"
+    success_url = "/animals/all/"
+
+
+class AnimalDetail(DetailView):
+    model = Animal
+    template_name = 'animal_detail.html'
+
+
+
+class AnimalDelete(DeleteView):
+    model = Animal
+    template_name = "delete.html"
+    success_url = "/animals/all/"
+
+
+class OwnerList(ListView):
+    model = Owner
+    template_name = "owner_list.html"
+    context_object_name = "owners"
+
+
+class CreateOwner(CreateView):
+    model = Owner
+    template_name = "create_owner.html"
+    form_class = OwnerForm
+    success_url = "/animals/owners/"
+
+
+class DeleteOwner(DeleteView):
+    model = Owner
+    template_name = "delete_owner.html"
+    success_url = '/animals/owners/'

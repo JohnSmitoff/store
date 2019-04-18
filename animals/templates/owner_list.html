@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All owners</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+        <a class="btn btn-primary" href="http://127.0.0.1:8000/animals/owner/create/">Create owner</a>
+
+    <div class="row">
+        {% for owner in owners %}
+
+        <div class="col-lg-4">
+            <div class="card" style="width: 18rem;">
+                <img src="{{owner.image_url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                <h5 class="card-title">{{owner.first_name}} {{owner.last_name}}</h5>
+                <p class="card-text">sex of the owner - {{owner.owner_sex}}</p>
+                  <p class="card-text">id in db - {{owner.pk}}</p>
+
+                <a href="#" class="btn btn-primary">See owner all animals</a>
+              </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+</div>
+</body>
+</html>
